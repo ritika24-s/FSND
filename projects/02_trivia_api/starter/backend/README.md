@@ -66,30 +66,142 @@ One note before you delve into your tasks: for each endpoint you are expected to
 8. Create a POST endpoint to get questions to play the quiz. This endpoint should take category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions. 
 9. Create error handlers for all expected errors including 400, 404, 422 and 500. 
 
-REVIEW_COMMENT
-```
-This README is missing documentation of your endpoints. Below is an example for your endpoint to get all categories. Please use it as a reference for creating your documentation and resubmit your code. 
+ENDPOINTS UNDERSTANDING
 
-Endpoints
-GET '/categories'
-GET ...
-POST ...
-DELETE ...
+1. GET '/categories'
+	General:
+		Endpoint to get list of all the categories
+		Request Arguments: None
+	Returns:
+		An object with success, categories.
+		'categories' key contains a list of category objects with:
+		
+		{
+                'success' : True,
+                'categories' : categories
+        }
+	Sample - 
+		Fixed categories -
+		{
+		  "categories": [
+			{
+			  "id": 1,
+			  "type": "Science"
+			},
+			{
+			  "id": 2,
+			  "type": "Art"
+			},
+			{
+			  "id": 3,
+			  "type": "Geography"
+			},
+			{
+			  "id": 4,
+			  "type": "History"
+			},
+			{
+			  "id": 5,
+			  "type": "Entertainment"
+			},
+			{
+			  "id": 6,
+			  "type": "Sports"
+			}
+		  ],
+		  "success": true
+		}
 
-GET '/categories'
-- Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
-- Request Arguments: None
-- Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
-{'1' : "Science",
-'2' : "Art",
-'3' : "Geography",
-'4' : "History",
-'5' : "Entertainment",
-'6' : "Sports"}
+2. POST '/categories'
+	General:
+		Endpoint to create a new category
+		Request Arguments: type of the category
+			json={'type':'Art'}
+	Returns:
+		An object with success, categories.
+		'categories' key contains a list of category objects with:
+		{
+                'success' : True,
+                'categories' : categories
+        }
 
-```
+3. GET '/questions'
+	General:
+		Endpoint to get list of all the questions
+		Request Arguments: None
+	Returns:
+		An object with success, questions, total_questions and categories.
+		{
+                'success': True,
+                'questions' : current_questions,
+                'total_questions' : total_questions
+                'categories' : categories
+        }
 
+4. DELETE '/questions/<int:question_id>'
+	General:
+		Endpoint to delete a question by its id
+		Request Arguments: question_id
+	Returns:
+		An object with success, deleted_questions, questions, total_questions and categories.
+		{
+                'success': True,
+                'deleted_question' : question_id,
+                'questions' : current_questions,
+                'total_questions' : total_questions,
+				'categories' : categories
+        }
 
+5. POST '/questions'
+	General:
+		Endpoint to create a new question using the submitted question, answer, category, difficulty and rating 
+		Request Arguments: json={"question":"What is the shape of earth?", "answer":"Spherical", "category":"3", "difficulty":"2","rating":"1"}'
+
+	Returns:
+		An object with success, questions and total_questions.
+               {
+                    'success': True,
+                    'current_questions': current_questions,
+                    'total_questions': total_questions
+               }
+	
+	General:
+		This endpoint can also be used to search for a particular question 
+		Request Arguments: json={"search":"title"}
+
+	Returns:
+		An object with success, questions and total_questions.
+		{
+                'success': True,
+				'questions' : current_questions,
+                'total_questions' : total_questions
+        }
+	
+6. GET '/categories/<int:category_id>/questions'
+	General:
+		Endpoint to get questions for particular category 
+		Request Arguments: category_id
+
+	Returns:
+		An object with success, questions, total_questions and current_category.
+		{
+                'success': True,
+                'questions' : current_questions,
+                'totalQuestions' : len(selection),
+                'current_category' : category.type
+        }
+
+7. POST '/quizzes'
+	General:
+		Endpoint to play the trivia game. This endpoint help yu generate random questions from a particular category or all. 
+		Request Arguments: list of previous_questions and category_id(optional)
+
+	Returns:
+		An object with success, question.
+		{
+                'success': True,
+				'question' : question
+        }
 ## Testing
 To run the tests, run
 ```
