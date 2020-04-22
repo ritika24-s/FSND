@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e8ad44ee-7536-4901-913c-46e718d56d9f",
+		"_postman_id": "7887652d-e38a-4259-823b-4b93c26b6f92",
 		"name": "udacity-fsnd-udaspicelatte",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -170,7 +170,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "barista",
@@ -379,7 +380,8 @@
 						]
 					}
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "manager",
@@ -473,6 +475,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InRCTkRXNkVycmh6ZGY1c0NPOVpsTiJ9.eyJpc3MiOiJodHRwczovL2NvZmZlZXNob3BhcHAuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTA0NjM5OTA3MjM4NjA1MDgzOTI1IiwiYXVkIjpbImNvZmZlZXNob3AiLCJodHRwczovL2NvZmZlZXNob3BhcHAuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTU4NzQ2NjY0NSwiZXhwIjoxNTg3NDczODQ1LCJhenAiOiI5VWYwZnhubnZma01oY1paSzMwUlB5TktLdVVjWjNoeSIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6ZHJpbmtzIiwiZ2V0OmRyaW5rcy1kZXRhaWwiLCJwYXRjaDpkcmlua3MiLCJwb3N0OmRyaW5rcyJdfQ.X-ZE7LujtccbdUchbK1TyIEwnI6V6w1uNZA31nVrwcVBS5_qFMKlEfODvD6uXfAzPFHOB4ZP8ExL_MduEYlm2gjSiKzbbDHrVmRAAR4pTZ8WIhBosBxxiwpWqWqUvWZG4Gv6FxEP8SD4XS1DUdnWaGbTMX_87GxlErgTp4hfJoc6fsfBcVMjzXepUK21xvzlkvxYaXxugL8lsmlQq-QWWSIaSFJTbsen7ggzXCWGHUJJ-qkF4KV_9YN7xvfZWBsLegjrSC5DwriPz-Kyl3NI_Y5zbsiHDU09PJHWJ7ywfJ1EcP9b2VfwTTuzVNZh-gX_S_09MaW8LBNsX1PGUdGkLg",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -484,7 +496,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Water3\",\n    \"recipe\": {\n        \"name\": \"Water\",\n        \"color\": \"blue\",\n        \"parts\": 1\n    }\n}"
+							"raw": "{\n    \"title\": \"Delight\",\n    \"recipe\": {{\n        \"name\": \"Milk\",\n        \"color\": \"white\",\n        \"parts\": 2\n    },\n    {\n    \t\"name\": \"Coffee\",\n        \"color\": \"brown\",\n        \"parts\": 3\t\n    }\n  }  \n}"
 						},
 						"url": {
 							"raw": "{{host}}/drinks",
@@ -610,7 +622,8 @@
 						]
 					}
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"event": [
@@ -642,5 +655,6 @@
 			"value": "localhost:5000",
 			"type": "string"
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

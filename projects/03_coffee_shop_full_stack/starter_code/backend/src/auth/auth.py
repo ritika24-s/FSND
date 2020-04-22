@@ -7,9 +7,9 @@ from urllib.request import urlopen
 
 AUTH0_DOMAIN = 'coffeeshopapp.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'coffeshop'
+API_AUDIENCE = 'coffeeshop'
 
-## AuthError Exception
+# AuthError Exception
 '''
 AuthError Exception
 A standardized way to communicate auth failure modes
@@ -45,13 +45,13 @@ def get_token_auth_header():
             'description': 'Authorization header must start with "Bearer".'
         }, 401)
 
-    elif len(parts) == 1:
+    elif len(auth_body) == 1:
         raise AuthError({
             'code': 'invalid_header',
             'description': 'Token not found.'
         }, 401)
 
-    elif len(parts) > 2:
+    elif len(auth_body) > 2:
         raise AuthError({
             'code': 'invalid_header',
             'description': 'Authorization header must be bearer token.'
@@ -168,6 +168,7 @@ def verify_decode_jwt(token):
     it should use the check_permissions method validate claims and check the requested permission
     return the decorator which passes the decoded payload to the decorated method
 '''
+
 def requires_auth(permission=''):
     def requires_auth_decorator(f):
         @wraps(f)

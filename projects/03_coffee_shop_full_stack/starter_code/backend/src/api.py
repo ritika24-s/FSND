@@ -50,6 +50,7 @@ def get_drinks():
         or appropriate status code indicating reason for failure
 '''
 @app.route('/drinks-detail')
+@requires_auth('get:drinks-detail')
 def get_list_of_drinks():
     drinks = Drink.query.order_by(Drink.id).all()
     long_drinks = [drink.long() for drink in drinks]
@@ -88,12 +89,12 @@ def create_drinks(payload):
         abort(409)
 
     try:
-        drink = Drink(new_title,new_recipe)
+        drink = Drink(title=new_title, recipe=json.dumps(new_recipe))
         drink.insert()
 
         return jsonify({
         'success' : True,
-        'drinks' : drink.long()
+        'drinks' : [drink.long()]
         })
 
     except:
@@ -135,7 +136,7 @@ def add_drinks(payload, id):
         drink.update()
         return jsonify({
             'success' : True,
-            'drink' : drink.long()
+            'drink' : [drink.long()]
             })
     except:
         abort(422)
