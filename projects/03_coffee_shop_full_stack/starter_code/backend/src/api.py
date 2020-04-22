@@ -18,7 +18,7 @@ CORS(app)
 '''
 db_drop_and_create_all()
 
-#ROUTES
+# ROUTES
 '''
 @TODO implement endpoint
     GET /drinks
@@ -87,7 +87,7 @@ def create_drinks(payload):
     if new_title or new_recipe is None:
         abort(400)
     
-    #check if the drink already exists
+    # check if the drink already exists
     existing_drink = Drink.query.filter(Drink.title == new_title).one_or_none()
     if existing_drink:
         abort(409)
@@ -101,7 +101,7 @@ def create_drinks(payload):
             'drinks': [drink.long()]
         })
 
-    except:
+    except Exception:
         abort(422)
 
 
@@ -143,7 +143,7 @@ def add_drinks(payload, id):
             'success': True,
             'drink': [drink.long()]
             })
-    except:
+    except Exception:
         abort(422)
 
 
@@ -174,11 +174,11 @@ def delete_drinks(payload, id):
             'delete': drink.id
         })
 
-    except:
+    except Exception:
         abort(422)
 
 
-#Error Handling
+# Error Handling
 '''
 Example error handling for unprocessable entity
 '''
