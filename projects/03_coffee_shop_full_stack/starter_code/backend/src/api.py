@@ -18,35 +18,38 @@ CORS(app)
 '''
 db_drop_and_create_all()
 
-## ROUTES
+#ROUTES
 '''
 @TODO implement endpoint
     GET /drinks
         it should be a public endpoint
         it should contain only the drink.short() data representation
-    returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
+    returns status code 200 and json {"success": True, "drinks": drinks} where
+        drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
 @app.route('/drinks')
 def get_drinks():
     drinks = Drink.query.all()
-    
+
     if drinks == []:
         abort(404)
     print(drinks)
     short_drinks = [drink.short() for drink in drinks]
 
     return jsonify({
-        'success' : True,
-        'drinks' : short_drinks
+        'success': True,
+        'drinks': short_drinks
         })
+
 
 '''
 @TODO implement endpoint
     GET /drinks-detail
         it should require the 'get:drinks-detail' permission
         it should contain the drink.long() data representation
-    returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
+    returns status code 200 and json {"success": True, "drinks": drinks}
+        where drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
 @app.route('/drinks-detail')
@@ -59,8 +62,8 @@ def get_list_of_drinks():
         abort(404)
 
     return jsonify({
-        'success' : True,
-        'drinks' : long_drinks
+        'success': True,
+        'drinks': long_drinks
         })
 
 
@@ -70,15 +73,16 @@ def get_list_of_drinks():
         it should create a new row in the drinks table
         it should require the 'post:drinks' permission
         it should contain the drink.long() data representation
-    returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the newly created drink
+    returns status code 200 and json {"success": True, "drinks": drink} where
+        drink an array containing only the newly created drink
         or appropriate status code indicating reason for failure
 '''
 @app.route('/drinks', methods=['POST'])
 @requires_auth('post:drinks')
 def create_drinks(payload):
     body = request.get_json()
-    new_title = body.get('title',None)
-    new_recipe = body.get('recipe',None)
+    new_title = body.get('title', None)
+    new_recipe = body.get('recipe', None)
 
     if new_title or new_recipe is None:
         abort(400)
@@ -93,8 +97,8 @@ def create_drinks(payload):
         drink.insert()
 
         return jsonify({
-        'success' : True,
-        'drinks' : [drink.long()]
+            'success': True,
+            'drinks': [drink.long()]
         })
 
     except:
@@ -109,24 +113,25 @@ def create_drinks(payload):
         it should update the corresponding row for <id>
         it should require the 'patch:drinks' permission
         it should contain the drink.long() data representation
-    returns status code 200 and json {"success": True, "drinks": drink} where drink an array containing only the updated drink
+    returns status code 200 and json {"success": True, "drinks": drink}
+        where drink an array containing only the updated drink
         or appropriate status code indicating reason for failure
 '''
 @app.route('/drinks/<id>', methods=['PATCH'])
 @requires_auth('patch:drinks')
 def add_drinks(payload, id):
     body = request.get_json()
-    new_title = body.get('title',None)
+    new_title = body.get('title', None)
     new_recipe = json.dumps(body.get('recipe', None))
 
     if new_title or new_recipe is None:
         abort(400)
     
-    drink = Drink.query.filter(Drink.id==id).one_or_none()
+    drink = Drink.query.filter(Drink.id == id).one_or_none()
 
     if drink is None:
-	    abort(404)
-     
+        abort(404)
+
     try:
         if new_title:
             drink.title = new_title
@@ -135,8 +140,8 @@ def add_drinks(payload, id):
         
         drink.update()
         return jsonify({
-            'success' : True,
-            'drink' : [drink.long()]
+            'success': True,
+            'drink': [drink.long()]
             })
     except:
         abort(422)
@@ -149,30 +154,31 @@ def add_drinks(payload, id):
         it should respond with a 404 error if <id> is not found
         it should delete the corresponding row for <id>
         it should require the 'delete:drinks' permission
-    returns status code 200 and json {"success": True, "delete": id} where id is the id of the deleted record
+    returns status code 200 and json {"success": True, "delete": id}
+        where id is the id of the deleted record
         or appropriate status code indicating reason for failure
 '''
 @app.route('/drinks/<id>', methods=['DELETE'])
 @requires_auth('delete:drinks')
 def delete_drinks(payload, id):    
-    drink = Drink.query.filter(Drink.id==id).one_or_none()
+    drink = Drink.query.filter(Drink.id == id).one_or_none()
 
     if drink is None:
-	    abort(404)
-     
+        abort(404)
+
     try:											   
         drink.delete()
 
         return jsonify({
-        'success' : True,
-        'delete' : drink.id
+            'success': True,
+            'delete': drink.id
         })
 
     except:
         abort(422)
 
 
-## Error Handling
+#Error Handling
 '''
 Example error handling for unprocessable entity
 '''
@@ -183,6 +189,7 @@ def unprocessable(error):
         "error": 422,
         "message": "unprocessable"
         }), 422
+
 
 '''
 @TODO implement error handlers using the @app.errorhandler(error) decorator
@@ -213,6 +220,7 @@ def bad_request(error):
         "message": "Bad Request"
         }), 400
 
+
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({
@@ -221,13 +229,15 @@ def not_found(error):
         "message": "resource not found"
         }), 404
 
+
 @app.errorhandler(416)
 def beyond_range_request(error):
     return jsonify({
-        "success" : False,
-        "error" : 416,
-        "message" : "Requested Range Not Satisfiable"
-        }),416
+        "success": False,
+        "error": 416,
+        "message": "Requested Range Not Satisfiable"
+        }), 416
+
 
 @app.errorhandler(405)
 def not_found(error):
@@ -236,6 +246,7 @@ def not_found(error):
         "error": 405,
         "message": "method not allowed"
     }), 405
+
 
 @app.errorhandler(500)
 def internal_server_error(error):
