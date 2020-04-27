@@ -63,7 +63,7 @@ def get_token_auth_header():
 '''
 @TODO implement check_permissions(permission, payload) method
     @INPUTS
-        permission: string permission (i.e. 'post:drink')
+        permission: string permission (i.e. 'post:actor')
         payload: decoded jwt payload
 
     it should raise an AuthError if permissions are not included in the payload
