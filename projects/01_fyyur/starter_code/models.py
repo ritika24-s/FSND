@@ -13,7 +13,7 @@ default_venue_img = 'https://images.unsplash.com/photo-1485686531765-ba63b07845a
 #----------------------------------------------------------------------------#
 
 class Venue(db.Model):
-    #__tablename__ = 'Venue'
+    #__tablename__ = 'venues'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -27,12 +27,12 @@ class Venue(db.Model):
     website = db.Column(db.String(120))
     seeking_talent = db.Column(db.Boolean, default=False)
     seeking_description = db.Column(db.String(500)
-    Show = db.relationship("Show", backref='venue', lazy=True)
+    shows = db.relationship('Show', backref='venue', lazy=True)
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
 class Artist(db.Model):
-    #__tablename__ = 'Artist'
+    #__tablename__ = 'artists'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -45,7 +45,7 @@ class Artist(db.Model):
     facebook_link = db.Column(db.String(500), nullable=False)
     seeking_venues = db.Column(db.Boolean, nullable=True, default=False)
     seeking_venues_description = db.Column(db.String(500), nullable=True)
-    Show = db.relationship("Show", backref='artist', lazy=True)
+    shows = db.relationship('Show', backref='artist', lazy=True)
 
 
 # TODO: implement any missing fields, as a database migration using Flask-Migrate
@@ -53,11 +53,11 @@ class Artist(db.Model):
 # TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
 
 class Show(db.Model):
-    #__tablename__ = 'Show'
+    #__tablename__ = 'shows'
 
     id = db.Column(db.Integer, primary_key=True)
-    venue_id = db.Column(db.Integer, db.ForeignKey('Venue.id'))
-    artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'))
+    venue_id = db.Column(db.Integer, db.ForeignKey('venues.id'))
+    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
     time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 

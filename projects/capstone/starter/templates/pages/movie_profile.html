@@ -1,0 +1,31 @@
+﻿{% extends 'main.html' %} {% block title %}{{ movie.title }} | Movie{%
+endblock %} {% block content %}
+<div class="row">
+    <div class="col-sm-6">
+        <h1 class="monospace">
+            {{ movie.title }}
+        </h1>
+        <p class="subtitle">ID: {{ movie.id }}</p>
+        <p>
+            <i class="fas fa-globe-americas"></i> {{'Title: '}}{{ movie.title }}
+        </p>
+        <p>
+            <i class="fas fa-globe-americas"></i> {{'Release date: '}}{{
+      movie.release_date
+            }}
+        </p>
+    </div>
+</div>
+
+<section>
+    <form action="/movies/{{movie.id}}/edit" method="GET">
+        <input type="submit" class="btn btn-warning" value="Edit Profile" />
+    </form>
+</section>
+
+<section>
+    <form action="/movies/{{movie.id}}/delete" method="POST">
+        <input type="submit" class="btn btn-danger" value="Delete Profile" />
+    </form>
+</section>
+{% endblock %}

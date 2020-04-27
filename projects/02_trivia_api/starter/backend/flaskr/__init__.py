@@ -22,7 +22,7 @@ def pagination(request,selection):
     current_questions = selection[start:end]
     current_questions = [question.format() for question in current_questions]
 
-    return current_display
+    return current_questions
  
 
 #filter categories through id or return all

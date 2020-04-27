@@ -2,10 +2,19 @@
   "ExpandedNodes": [
     "",
     "\\projects",
-    "\\projects\\02_trivia_api",
-    "\\projects\\02_trivia_api\\starter\\backend",
-    "\\projects\\02_trivia_api\\starter\\backend\\flaskr"
+    "\\projects\\01_fyyur",
+    "\\projects\\01_fyyur\\starter_code",
+    "\\projects\\01_fyyur\\starter_code\\templates",
+    "\\projects\\01_fyyur\\starter_code\\templates\\layouts",
+    "\\projects\\01_fyyur\\starter_code\\templates\\pages",
+    "\\projects\\03_coffee_shop_full_stack\\starter_code",
+    "\\projects\\03_coffee_shop_full_stack\\starter_code\\backend",
+    "\\projects\\03_coffee_shop_full_stack\\starter_code\\backend\\src",
+    "\\projects\\03_coffee_shop_full_stack\\starter_code\\backend\\src\\database",
+    "\\projects\\capstone\\heroku_sample",
+    "\\projects\\capstone\\heroku_sample\\starter",
+    "\\projects\\capstone\\starter"
   ],
-  "SelectedNode": "\\projects\\02_trivia_api\\starter",
+  "SelectedNode": "\\projects\\01_fyyur\\starter_code\\app.py",
   "PreviewInSolutionExplorer": false
 }

@@ -54,7 +54,7 @@ def get_drinks():
 '''
 @app.route('/drinks-detail')
 @requires_auth('get:drinks-detail')
-def get_list_of_drinks():
+def get_list_of_drinks(payload):
     drinks = Drink.query.order_by(Drink.id).all()
     long_drinks = [drink.long() for drink in drinks]
 

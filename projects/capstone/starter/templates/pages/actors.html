@@ -1,0 +1,14 @@
+{% extends 'main.html' %} {% block title %}The Agency | Actor Search{% endblock
+%} {% block content %}
+<!-- <h3>
+  Number of search results for "{{ search_term }}": {{ results | length }}
+</h3> -->
+<h3>All Actors</h3>
+<div class="list-group">
+    {% for actor in actors %}
+    <a href="/actors/{{ actor.id }}" class="list-group-item">
+        <h5><i class="fas fa-star"></i>{{ actor.name }}</h5>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}
