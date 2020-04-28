@@ -5,8 +5,8 @@ import os
 from flask_wtf import Form
 # from forms import *
 
-#database_path = os.environ['DATABASE_URL']
-database_path = postgres://postgres:password123@localhost:5432/capstone
+database_path = os.environ['DATABASE_URL']
+#database_path = postgres://postgres:password123@localhost:5432/capstone
 
 db = SQLAlchemy()
 

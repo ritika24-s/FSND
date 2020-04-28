@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from flask_wtf import Form
 from auth.auth import AuthError, requires_auth
 from werkzeug.exceptions import HTTPException
-from authlib.flask.client import OAuth
+from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
 from models import *
 from forms import *
@@ -72,9 +72,7 @@ def create_app(test_config=None):
     '''
     @app.route('/')
     def index():
-        return render_template('home.html',
-                           userinfo=session['profile'],
-                           userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
+        return render_template('home.html')
 
 
     '''
@@ -84,7 +82,9 @@ def create_app(test_config=None):
     @app.route('/actors', methods=["GET"])
     @requires_auth('get:actors')
     def actors(token):
-        return render_template('pages/actors.html', actors=Actor.query.all())
+        actors=Actor.query.all()
+        actors = [actor.format() for actor in actors]
+        return render_template('pages/actors.html', actors )
 
     @app.route('/actors', methods=["POST"])
     @requires_auth('post:actors')
@@ -114,10 +114,10 @@ def create_app(test_config=None):
     @requires_auth('get:actors')
     def show_actor(token, id):
         actor = Actor.query.filter_by(id=id).first()
-        return render_template('pages/actor_profile.html', actor=actor)
+        return render_template('pages/actor_profile.html', actor=actor.format())
 
     # edits existing actor:
-    @app.route('/actors/<int:id>/edit', methods=["POST"])
+    @app.route('/actors/<int:id>/edit', methods=["PATCH"])
     @requires_auth('patch:actor')
     def edit_actor(token, id):
         try:
@@ -167,7 +167,7 @@ def create_app(test_config=None):
     def get_edit_actor(id):
         actor = Actor.query.filter_by(id=id).one()
         form = ActorForm()
-        return render_template('forms/edit_actor.html', actor=actor, form=form)
+        return render_template('forms/edit_actor.html', actor=actor.format(), form=form)
 
 
 #----------------------------------------------------------------------------#
@@ -177,7 +177,9 @@ def create_app(test_config=None):
     @app.route('/movies', methods=["GET"])
     @requires_auth('get:movies')
     def movies(token):
-        return render_template('pages/movies.html', movies=Movie.query.order_by(Movie.id).all())
+        movies=Movie.query.order_by(Movie.id).all()
+        movies = [movie.format() for movie in movies]
+        return render_template('pages/movies.html', movies)
 
 
     @app.route('/movies', methods=["POST"])
@@ -220,7 +222,7 @@ def create_app(test_config=None):
             return redirect(url_for('movies'))
 
 
-    @app.route('/movies/<int:id>/update', methods=["POST"])
+    @app.route('/movies/<int:id>/update', methods=["PATCH"])
     @requires_auth('patch:movie')
     def update_movie(token, id):
         try:
@@ -250,13 +252,13 @@ def create_app(test_config=None):
     @app.route('/movies/<int:id>', methods=["GET"])
     def get_movie_profile(id):
         movie = Movie.query.filter_by(id=id).first()
-        return render_template('pages/movie_profile.html', movie=movie)
+        return render_template('pages/movie_profile.html', movie=movie.format())
 
     @app.route('/movies/<int:id>/edit')
     def get_edit_movie(id):
         movie = Movie.query.filter_by(id=id).first()
         form = MovieForm()
-        return render_template('pages/edit_movie.html', movie=movie, form=form)
+        return render_template('pages/edit_movie.html', movie=movie.format(), form=form)
 
     return app
 
